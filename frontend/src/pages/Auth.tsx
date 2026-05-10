@@ -1,19 +1,55 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Button } from '../components/ui/Button'
 import { Input } from '../components/ui/Input'
 import { Compass, Mail, Lock, User, ArrowRight } from 'lucide-react'
+import { AuthAPI } from '../lib/api'
+import { useAuthStore } from '../store/useAuthStore'
+
 
 export function Auth() {
   const [isLogin, setIsLogin] = useState(true)
   const navigate = useNavigate()
+  const setCreds = useAuthStore((s) => s.setCreds)
 
-  const handleAuth = (e: React.FormEvent) => {
+  const handleAuth = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    // For now, bypass real authentication and pretend it succeeded.
-    // We navigate to /dashboard (which we will build next)
-    navigate('/dashboard')
+    const form = e.currentTarget
+    const fd = new FormData(form)
+
+    const name = (fd.get('fullName')?.toString() ?? '').trim()
+    const email = (fd.get('email')?.toString() ?? '').trim()
+    const password = (fd.get('password')?.toString() ?? '').trim()
+
+    try {
+      if (isLogin) {
+        const res = await AuthAPI.login({ username: email, password })
+        const { token, name: userName, email: userEmail } = res.data
+        setCreds(token, { name: userName, email: userEmail })
+        navigate('/dashboard')
+        return
+      }
+
+      const res = await AuthAPI.register({
+        // backend RegisterRequest expects: name, email, password
+        // UI uses only these 3 fields currently, so map accordingly.
+        firstName: name,
+        lastName: '',
+        email,
+        phone: '',
+        city: '',
+        country: '',
+        password,
+      } as any)
+
+      const { token, name: userName, email: userEmail } = res.data
+      setCreds(token, { name: userName, email: userEmail })
+      navigate('/dashboard')
+    } catch (err: any) {
+      const msg = err?.response?.data ?? err?.message ?? 'Registration/Login failed'
+      alert(typeof msg === 'string' ? msg : 'Registration/Login failed')
+    }
   }
 
   return (
@@ -51,19 +87,19 @@ export function Auth() {
                   <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }}>
                     <div className="relative">
                       <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
-                      <Input placeholder="Full Name" className="pl-12" required />
+<Input name="fullName" placeholder="Full Name" className="pl-12" required />
                     </div>
                   </motion.div>
                 )}
                 
                 <div className="relative">
                   <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
-                  <Input type="email" placeholder="Email Address" className="pl-12" required />
+<Input name="email" type="email" placeholder="Email Address" className="pl-12" required />
                 </div>
                 
                 <div className="relative">
                   <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
-                  <Input type="password" placeholder="Password" className="pl-12" required />
+<Input name="password" type="password" placeholder="Password" className="pl-12" required />
                 </div>
 
                 {isLogin && (

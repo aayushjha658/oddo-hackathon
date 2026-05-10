@@ -4,10 +4,11 @@ import { motion } from 'framer-motion'
 interface GlowCardProps {
   children: React.ReactNode
   className?: string
+  style?: React.CSSProperties
   onClick?: () => void
 }
 
-export function GlowCard({ children, className = '', onClick }: GlowCardProps) {
+export function GlowCard({ children, className = '', style, onClick }: GlowCardProps) {
   const cardRef = useRef<HTMLDivElement>(null)
   const [glowStyle, setGlowStyle] = useState({})
   const [isHovered, setIsHovered] = useState(false)
@@ -18,7 +19,7 @@ export function GlowCard({ children, className = '', onClick }: GlowCardProps) {
     const x = e.clientX - rect.left
     const y = e.clientY - rect.top
     setGlowStyle({
-      background: `radial-gradient(300px circle at ${x}px ${y}px, rgba(20, 184, 166, 0.12), transparent 70%)`,
+      background: `radial-gradient(280px circle at ${x}px ${y}px, rgba(201,143,30,0.10), transparent 70%)`,
     })
   }
 
@@ -26,19 +27,21 @@ export function GlowCard({ children, className = '', onClick }: GlowCardProps) {
     <motion.div
       ref={cardRef}
       className={`relative group ${className}`}
+      style={style}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => { setIsHovered(false); setGlowStyle({}) }}
       onClick={onClick}
     >
-      {/* Glow overlay */}
+      {/* Gold glow overlay */}
       <div
-        className="pointer-events-none absolute inset-0 rounded-[inherit] transition-opacity duration-300 z-0"
+        className="pointer-events-none absolute inset-0 rounded-[inherit] z-0 transition-opacity duration-300"
         style={{ ...glowStyle, opacity: isHovered ? 1 : 0 }}
       />
-      {/* Border glow */}
+      {/* Gold border glow on hover */}
       <div
-        className="pointer-events-none absolute inset-0 rounded-[inherit] border border-brand-500/0 group-hover:border-brand-500/20 transition-all duration-300 z-0"
+        className="pointer-events-none absolute inset-0 rounded-[inherit] border border-transparent group-hover:border-[rgba(201,143,30,0.25)] transition-all duration-300 z-0"
+        style={{ boxShadow: isHovered ? '0 0 20px rgba(201,143,30,0.08)' : 'none' }}
       />
       <div className="relative z-10">{children}</div>
     </motion.div>

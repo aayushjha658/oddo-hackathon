@@ -1,119 +1,116 @@
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
-import { MapPin, Calendar, Compass, Star, Sparkles, ArrowRight, Users, Globe2, PackageCheck, BookOpen, LayoutDashboard, Search } from 'lucide-react'
+import { MapPin, Calendar, Compass, Sparkles, ArrowRight, Users, Globe2, PackageCheck, BookOpen, LayoutDashboard, Search } from 'lucide-react'
 import { GlowCard } from '../components/ui/GlowCard'
+
+const NAV_LINKS = [
+  { label: 'Dashboard',        path: '/dashboard', icon: LayoutDashboard },
+  { label: 'My Trips',         path: '/trips',     icon: Globe2 },
+  { label: 'Itinerary Builder',path: '/planning',  icon: Calendar },
+  { label: 'Explore',          path: '/explore',   icon: Search },
+  { label: 'Community',        path: '/community', icon: Users },
+  { label: 'Checklist',        path: '/checklist', icon: PackageCheck },
+  { label: 'Trip Notes',       path: '/notes',     icon: BookOpen },
+  { label: 'Budget',           path: '/budget',    icon: Compass },
+]
 
 export function Landing() {
   const navigate = useNavigate()
 
-  const NAV_LINKS = [
-    { label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard, color: 'text-brand-400' },
-    { label: 'My Trips', path: '/trips', icon: Globe2, color: 'text-purple-400' },
-    { label: 'Itinerary Builder', path: '/planning', icon: Calendar, color: 'text-teal-400' },
-    { label: 'Explore', path: '/explore', icon: Search, color: 'text-sky-400' },
-    { label: 'Community', path: '/community', icon: Users, color: 'text-pink-400' },
-    { label: 'Checklist', path: '/checklist', icon: PackageCheck, color: 'text-amber-400' },
-    { label: 'Trip Notes', path: '/notes', icon: BookOpen, color: 'text-emerald-400' },
-    { label: 'Budget', path: '/budget', icon: Compass, color: 'text-orange-400' },
-  ]
-
   return (
-    <div className="min-h-screen">
-      {/* Top Navbar */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-background/60 backdrop-blur-xl border-b border-slate-800">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2 text-white font-extrabold text-xl">
-            <Compass className="w-6 h-6 text-brand-400" />
-            Traveloop
-          </div>
+    <div className="min-h-screen" style={{ background: '#07080f', color: '#ede2c5' }}>
+
+      {/* ── Top Navbar ───────────────────────────────────────────── */}
+      <header className="fixed top-0 left-0 right-0 z-50" style={{ background: 'rgba(7,8,15,0.85)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(201,143,30,0.12)' }}>
+        <div className="max-w-7xl mx-auto px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <button
-              onClick={() => navigate('/auth')}
-              className="text-sm text-slate-400 hover:text-white transition-colors px-4 py-2"
+            <div className="w-7 h-7 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg,#c98f1e,#e4a82c)' }}>
+              <Compass className="w-4 h-4" style={{ color: '#07080f' }} />
+            </div>
+            <span className="font-display font-semibold tracking-widest uppercase text-lg" style={{ color: '#f3d996', letterSpacing: '0.2em' }}>Traveloop</span>
+          </div>
+          <div className="flex items-center gap-4">
+            <button onClick={() => navigate('/auth')} className="text-sm transition-colors" style={{ color: 'rgba(237,226,197,0.5)', fontFamily: 'Inter, sans-serif' }}
+              onMouseEnter={e => (e.currentTarget.style.color = '#e4a82c')}
+              onMouseLeave={e => (e.currentTarget.style.color = 'rgba(237,226,197,0.5)')}
             >
               Sign In
             </button>
             <button
               onClick={() => navigate('/dashboard')}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-500 hover:bg-brand-600 transition-colors text-white text-sm font-semibold shadow-[0_0_20px_rgba(20,184,166,0.3)]"
+              className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all"
+              style={{ background: 'linear-gradient(135deg,#c98f1e,#e4a82c)', color: '#07080f', fontFamily: 'Inter, sans-serif', boxShadow: '0 0 20px rgba(201,143,30,0.35)' }}
             >
-              <Sparkles className="w-4 h-4" />
-              Open App
+              <Sparkles className="w-4 h-4" /> Open App
             </button>
           </div>
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="relative pt-40 pb-24 overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-brand-900/40 via-background to-background" />
-        <div className="absolute top-1/2 left-10 w-64 h-64 bg-brand-500/10 rounded-full blur-3xl -z-10" />
-        <div className="absolute bottom-0 right-10 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl -z-10" />
+      {/* ── Hero ─────────────────────────────────────────────────── */}
+      <section className="relative pt-44 pb-28 overflow-hidden">
+        {/* Ambient glows */}
+        <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 60% 40% at 50% 0%, rgba(201,143,30,0.07) 0%, transparent 70%)' }} />
+        <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(201,143,30,0.04) 0%, transparent 70%)', filter: 'blur(60px)' }} />
+        <div className="absolute top-20 right-0 w-80 h-80 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(201,143,30,0.03) 0%, transparent 70%)', filter: 'blur(80px)' }} />
 
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
-            className="text-center max-w-4xl mx-auto"
-          >
+        <div className="max-w-6xl mx-auto px-8 relative z-10 text-center">
+          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: 'easeOut' }}>
+
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface/50 border border-brand-500/30 backdrop-blur-md mb-8 text-brand-100 text-sm"
+              transition={{ delay: 0.2, duration: 0.6 }}
+              className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full mb-10 text-xs font-semibold uppercase tracking-widest"
+              style={{ background: 'rgba(201,143,30,0.08)', border: '1px solid rgba(201,143,30,0.2)', color: '#e4a82c', fontFamily: 'Inter, sans-serif' }}
             >
-              <Star className="w-4 h-4 text-brand-500" />
-              <span>The #1 Intelligent Travel Companion</span>
+              <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: '#c98f1e' }} />
+              The Premier Luxury Travel Companion
             </motion.div>
 
-            <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 leading-tight">
-              Design Your{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-emerald-300">
-                Perfect Trip
-              </span>{' '}
-              with Traveloop
+            <h1 className="font-display font-light mb-6 leading-none" style={{ fontSize: 'clamp(3rem, 7vw, 6rem)', color: '#fdf8ec' }}>
+              Your World.{' '}
+              <em className="not-italic text-gold-shimmer">Curated.</em>
             </h1>
 
-            <p className="text-xl text-slate-300 mb-10 font-light leading-relaxed max-w-2xl mx-auto">
-              Experience the future of travel planning. Drag-and-drop itineraries, intelligent budget tracking, a travel community, and packing checklists — all in one place.
+            <p className="max-w-2xl mx-auto mb-12 leading-relaxed font-light text-xl" style={{ color: 'rgba(237,226,197,0.6)', fontFamily: 'Inter, sans-serif' }}>
+              Design bespoke journeys with drag-and-drop precision. From boutique hideaways to exotic resorts — every detail, exquisitely planned.
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
               <button
                 onClick={() => navigate('/dashboard')}
-                className="flex items-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-brand-500 to-teal-400 hover:from-brand-600 hover:to-teal-500 text-white font-bold text-lg transition-all shadow-[0_0_30px_rgba(20,184,166,0.4)] hover:shadow-[0_0_50px_rgba(20,184,166,0.5)] hover:scale-105"
+                className="group flex items-center gap-3 px-10 py-4 rounded-xl text-base font-semibold transition-all hover:scale-105"
+                style={{ background: 'linear-gradient(135deg,#a97218,#c98f1e,#e4a82c)', color: '#07080f', boxShadow: '0 0 40px rgba(201,143,30,0.4)', fontFamily: 'Inter, sans-serif' }}
               >
                 <Sparkles className="w-5 h-5" />
-                Start Planning For Free
-                <ArrowRight className="w-5 h-5" />
+                Begin Your Journey
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
               <button
                 onClick={() => navigate('/explore')}
-                className="flex items-center gap-2 px-8 py-4 rounded-2xl border border-slate-700 text-slate-300 hover:border-brand-500/50 hover:text-white hover:bg-brand-500/5 transition-all text-lg font-medium"
+                className="flex items-center gap-2 px-10 py-4 rounded-xl text-base transition-all hover:scale-105"
+                style={{ border: '1px solid rgba(201,143,30,0.25)', color: '#e4a82c', background: 'rgba(201,143,30,0.04)', fontFamily: 'Inter, sans-serif' }}
               >
                 Explore Destinations
               </button>
             </div>
+
           </motion.div>
         </div>
       </section>
 
-      {/* Quick Navigation Section */}
-      <section className="py-16 px-6">
+      {/* ── Feature quick-nav grid ──────────────────────────────── */}
+      <section className="py-16 px-8">
         <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-10"
-          >
-            <h2 className="text-3xl font-bold mb-3">Everything You Need</h2>
-            <p className="text-slate-400">Jump to any feature directly from the home page.</p>
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
+            <p className="text-xs uppercase tracking-[0.25em] mb-3" style={{ color: '#c98f1e', fontFamily: 'Inter, sans-serif' }}>Full Suite</p>
+            <h2 className="font-display text-4xl font-light" style={{ color: '#fdf8ec' }}>Everything You Need</h2>
+            <div className="divider-gold w-32 mx-auto mt-5" />
           </motion.div>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            {NAV_LINKS.map(({ label, path, icon: Icon, color }, i) => (
+            {NAV_LINKS.map(({ label, path, icon: Icon }, i) => (
               <motion.div
                 key={path}
                 initial={{ opacity: 0, y: 20 }}
@@ -122,14 +119,16 @@ export function Landing() {
                 transition={{ delay: i * 0.07 }}
               >
                 <GlowCard
-                  className="bg-surface/50 border border-slate-800 rounded-2xl p-5 cursor-pointer group"
+                  className="rounded-2xl p-6 cursor-pointer group transition-all duration-300"
+                  style={{ background: 'rgba(13,16,32,0.8)', border: '1px solid rgba(201,143,30,0.12)' } as any}
                   onClick={() => navigate(path)}
                 >
-                  <div className={`w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform`}>
-                    <Icon className={`w-5 h-5 ${color}`} />
+                  <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-4 transition-transform group-hover:scale-110"
+                    style={{ background: 'rgba(201,143,30,0.1)', border: '1px solid rgba(201,143,30,0.2)' }}>
+                    <Icon className="w-5 h-5" style={{ color: '#c98f1e' }} />
                   </div>
-                  <p className="font-semibold text-white text-sm">{label}</p>
-                  <p className="text-xs text-slate-500 mt-0.5 flex items-center gap-1 group-hover:text-brand-400 transition-colors">
+                  <p className="font-semibold text-sm mb-1" style={{ color: '#f3d996', fontFamily: 'Inter, sans-serif' }}>{label}</p>
+                  <p className="text-xs flex items-center gap-1 transition-colors" style={{ color: 'rgba(201,143,30,0.5)', fontFamily: 'Inter, sans-serif' }}>
                     Open <ArrowRight className="w-3 h-3" />
                   </p>
                 </GlowCard>
@@ -139,94 +138,73 @@ export function Landing() {
         </div>
       </section>
 
-      {/* Features Grid */}
-      <section className="py-16 px-6 bg-surface/30">
+      {/* ── Why Traveloop ──────────────────────────────────────── */}
+      <section className="py-20 px-8" style={{ background: 'rgba(13,16,32,0.5)' }}>
         <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-3xl font-bold mb-3">Why Traveloop?</h2>
-            <p className="text-slate-400">Built for modern explorers who want more than a notes app.</p>
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-14">
+            <p className="text-xs uppercase tracking-[0.25em] mb-3" style={{ color: '#c98f1e', fontFamily: 'Inter, sans-serif' }}>The Difference</p>
+            <h2 className="font-display text-4xl font-light" style={{ color: '#fdf8ec' }}>Why Traveloop?</h2>
+            <div className="divider-gold w-32 mx-auto mt-5" />
           </motion.div>
           <div className="grid md:grid-cols-3 gap-8">
-            <FeatureCard
-              icon={<Calendar className="w-6 h-6 text-brand-400" />}
-              title="Smart Itineraries"
-              description="Drag and drop stops on a visually stunning timeline. Day-by-day planning with weather insights baked in."
-              delay={0.1}
-            />
-            <FeatureCard
-              icon={<MapPin className="w-6 h-6 text-teal-400" />}
-              title="Budget Analytics"
-              description="Keep finances in check with beautiful charts, real-time budget alerts, and per-category breakdowns in ₹."
-              delay={0.2}
-            />
-            <FeatureCard
-              icon={<Users className="w-6 h-6 text-purple-400" />}
-              title="Travel Community"
-              description="Share your experiences, discover hidden gems from real travelers, and get inspired for your next adventure."
-              delay={0.3}
-            />
+            {[
+              { icon: Calendar, title: 'Bespoke Itineraries', desc: 'Craft day-by-day journeys with drag-and-drop precision. Weather insights, local tips, and expense tracking built in.', },
+              { icon: MapPin, title: 'Budget Intelligence', desc: 'Elegant budget dashboards in ₹. Real-time category breakdowns and spending pulse charts styled for discerning travelers.', },
+              { icon: Users, title: 'Exclusive Community', desc: 'Connect with fellow connoisseurs of travel. Share hidden gems, boutique finds, and curated local experiences.', },
+            ].map(({ icon: Icon, title, desc }, i) => (
+              <motion.div
+                key={title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.15 }}
+                className="p-8 rounded-3xl group hover:bg-[rgba(201,143,30,0.04)] transition-all"
+                style={{ border: '1px solid rgba(201,143,30,0.12)' }}
+              >
+                <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform"
+                  style={{ background: 'rgba(201,143,30,0.08)', border: '1px solid rgba(201,143,30,0.18)' }}>
+                  <Icon className="w-6 h-6" style={{ color: '#c98f1e' }} />
+                </div>
+                <h3 className="font-display text-2xl font-normal mb-3" style={{ color: '#f3d996' }}>{title}</h3>
+                <p className="leading-relaxed" style={{ color: 'rgba(237,226,197,0.55)', fontFamily: 'Inter, sans-serif', fontSize: '0.95rem' }}>{desc}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Final CTA */}
-      <section className="py-24 px-6">
-        <div className="max-w-3xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+      {/* ── CTA ────────────────────────────────────────────────── */}
+      <section className="py-28 px-8 text-center relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 50% 60% at 50% 50%, rgba(201,143,30,0.06) 0%, transparent 70%)' }} />
+        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="relative z-10">
+          <p className="text-xs uppercase tracking-[0.25em] mb-4" style={{ color: '#c98f1e', fontFamily: 'Inter, sans-serif' }}>Get Started</p>
+          <h2 className="font-display text-5xl md:text-6xl font-light mb-6 leading-tight" style={{ color: '#fdf8ec' }}>
+            Ready to Explore the<br />
+            <span className="text-gold-shimmer">World in Style?</span>
+          </h2>
+          <p className="text-lg mb-12 max-w-lg mx-auto" style={{ color: 'rgba(237,226,197,0.5)', fontFamily: 'Inter, sans-serif' }}>
+            No sign-up required to explore. Step inside and begin crafting your perfect escape.
+          </p>
+          <button
+            onClick={() => navigate('/dashboard')}
+            className="inline-flex items-center gap-3 px-12 py-4 rounded-xl text-base font-semibold hover:scale-105 transition-all"
+            style={{ background: 'linear-gradient(135deg,#a97218,#c98f1e,#e4a82c)', color: '#07080f', boxShadow: '0 0 50px rgba(201,143,30,0.4)', fontFamily: 'Inter, sans-serif' }}
           >
-            <h2 className="text-4xl md:text-5xl font-extrabold mb-6">
-              Ready to plan your{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-teal-300">next adventure?</span>
-            </h2>
-            <p className="text-slate-400 text-lg mb-10">No sign-up required to explore. Jump right in.</p>
-            <button
-              onClick={() => navigate('/dashboard')}
-              className="flex items-center gap-3 px-10 py-4 rounded-2xl bg-gradient-to-r from-brand-500 to-teal-400 hover:from-brand-600 hover:to-teal-500 text-white font-bold text-lg transition-all shadow-[0_0_30px_rgba(20,184,166,0.4)] mx-auto hover:scale-105"
-            >
-              <Sparkles className="w-5 h-5" />
-              Open Traveloop
-            </button>
-          </motion.div>
-        </div>
+            <Sparkles className="w-5 h-5" />
+            Open Traveloop
+          </button>
+        </motion.div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-slate-800 py-8 px-6">
-        <div className="max-w-7xl mx-auto flex items-center justify-between text-slate-500 text-sm">
-          <div className="flex items-center gap-2">
-            <Compass className="w-4 h-4 text-brand-400" />
-            <span className="font-semibold text-white">Traveloop</span>
-            <span>— Built for Hackathon 2026</span>
+      {/* ── Footer ─────────────────────────────────────────────── */}
+      <footer style={{ borderTop: '1px solid rgba(201,143,30,0.1)', padding: '2rem 2.5rem' }}>
+        <div className="max-w-7xl mx-auto flex items-center justify-center">
+          <div className="flex items-center gap-2.5">
+            <Compass className="w-4 h-4" style={{ color: '#c98f1e' }} />
+            <span className="font-display text-sm tracking-widest uppercase" style={{ color: '#e4a82c' }}>Traveloop</span>
           </div>
-          <span>Frontend · React · Vite · TypeScript</span>
         </div>
       </footer>
     </div>
-  )
-}
-
-function FeatureCard({ icon, title, description, delay }: { icon: React.ReactNode, title: string, description: string, delay: number }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay }}
-      className="bg-surface/50 border border-slate-800 p-8 rounded-3xl hover:bg-surface transition-all duration-300 group"
-    >
-      <div className="w-12 h-12 bg-slate-800/80 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-        {icon}
-      </div>
-      <h3 className="text-xl font-semibold mb-3 text-white">{title}</h3>
-      <p className="text-slate-400 leading-relaxed">{description}</p>
-    </motion.div>
   )
 }

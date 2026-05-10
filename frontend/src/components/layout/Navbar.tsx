@@ -45,20 +45,29 @@ export function Navbar() {
   }
 
   return (
-    <nav className="fixed top-0 left-0 h-screen w-64 bg-surface/50 backdrop-blur-xl border-r border-slate-800 p-5 flex flex-col z-50 overflow-y-auto scrollbar-none">
-      <Link to="/" className="flex items-center gap-2 text-brand-400 hover:text-brand-300 transition-colors mb-8">
-        <Compass className="w-7 h-7" />
-        <span className="font-extrabold text-xl tracking-tight text-white">Traveloop</span>
+    <nav className="fixed top-0 left-0 h-screen w-64 flex flex-col z-50 overflow-y-auto scrollbar-none" style={{ background: 'rgba(7,8,15,0.95)', backdropFilter: 'blur(20px)', borderRight: '1px solid rgba(201,143,30,0.12)' }}>
+      {/* Logo */}
+      <Link to="/" className="flex items-center gap-2.5 px-6 py-7 group shrink-0">
+        <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #c98f1e, #e4a82c)' }}>
+          <Compass className="w-4.5 h-4.5 text-[#07080f]" />
+        </div>
+        <span className="font-display font-semibold text-xl tracking-widest uppercase" style={{ color: '#f3d996', letterSpacing: '0.15em' }}>
+          Traveloop
+        </span>
       </Link>
 
-      <div className="flex-1 flex flex-col gap-1">
+      {/* Gold divider */}
+      <div className="divider-gold mx-5 mb-4" />
+
+      <div className="flex-1 flex flex-col gap-0.5 px-3">
         {NAV_GROUPS.map(group => {
           const isCollapsed = collapsed.includes(group.label)
           return (
-            <div key={group.label} className="mb-2">
+            <div key={group.label} className="mb-3">
               <button
                 onClick={() => toggleGroup(group.label)}
-                className="flex items-center justify-between w-full px-2 py-1.5 mb-1 text-xs font-semibold text-slate-600 uppercase tracking-widest hover:text-slate-400 transition-colors"
+                className="flex items-center justify-between w-full px-3 py-1.5 mb-1 text-[10px] font-semibold uppercase tracking-[0.18em] transition-colors"
+                style={{ color: 'rgba(201,143,30,0.5)', fontFamily: 'Inter, sans-serif' }}
               >
                 <span>{group.label}</span>
                 <ChevronDown className={`w-3 h-3 transition-transform ${isCollapsed ? '-rotate-90' : ''}`} />
@@ -77,22 +86,24 @@ export function Navbar() {
                     <Link
                       key={link.name}
                       to={link.path}
-                      className={`relative flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all duration-200 mb-0.5 ${
-                        isActive ? 'text-white' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
-                      }`}
+                      className="relative flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all duration-200 mb-0.5 group/nav"
+                      style={{
+                        background: isActive ? 'rgba(201,143,30,0.1)' : 'transparent',
+                        color: isActive ? '#e4a82c' : 'rgba(237,226,197,0.55)',
+                        border: isActive ? '1px solid rgba(201,143,30,0.2)' : '1px solid transparent',
+                      }}
                     >
                       {isActive && (
                         <motion.div
                           layoutId="activeNavTab"
-                          className="absolute inset-0 bg-brand-500/10 border border-brand-500/20 rounded-xl"
+                          className="absolute inset-0 rounded-xl"
+                          style={{ background: 'rgba(201,143,30,0.06)' }}
                           initial={false}
                           transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                         />
                       )}
-                      <div className="relative z-10 flex items-center gap-3">
-                        <Icon className={`w-4 h-4 ${isActive ? 'text-brand-400' : ''}`} />
-                        <span className="font-medium text-sm">{link.name}</span>
-                      </div>
+                      <Icon className="w-4 h-4 relative z-10 shrink-0" />
+                      <span className="relative z-10 text-sm font-medium" style={{ fontFamily: 'Inter, sans-serif', letterSpacing: '0.02em' }}>{link.name}</span>
                     </Link>
                   )
                 })}
@@ -102,17 +113,18 @@ export function Navbar() {
         })}
       </div>
 
-      {/* User Box */}
-      <div className="mt-4 pt-4 border-t border-slate-800">
-        <div className="flex items-center gap-3 p-3 bg-slate-800/50 rounded-2xl border border-slate-700/50 hover:border-slate-600 transition-colors cursor-pointer">
-          <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-brand-500 to-teal-200 p-[2px] shrink-0">
-            <div className="w-full h-full rounded-full bg-surface flex items-center justify-center overflow-hidden">
-              <img src="https://ui-avatars.com/api/?name=User&background=0D8ABC&color=fff" alt="avatar" />
-            </div>
+      {/* Gold divider */}
+      <div className="divider-gold mx-5 mt-2 mb-4" />
+
+      {/* User card */}
+      <div className="px-4 pb-6">
+        <div className="flex items-center gap-3 p-3 rounded-2xl" style={{ background: 'rgba(201,143,30,0.06)', border: '1px solid rgba(201,143,30,0.15)' }}>
+          <div className="w-9 h-9 rounded-full shrink-0 overflow-hidden" style={{ border: '2px solid rgba(201,143,30,0.4)' }}>
+            <img src="https://ui-avatars.com/api/?name=Explorer&background=c98f1e&color=07080f&bold=true" alt="avatar" className="w-full h-full" />
           </div>
           <div className="min-w-0">
-            <p className="text-sm font-medium text-white truncate">Test User</p>
-            <p className="text-xs text-slate-400 truncate">Offline Mode</p>
+            <p className="text-sm font-semibold truncate" style={{ color: '#f3d996', fontFamily: 'Inter, sans-serif' }}>Explorer</p>
+            <p className="text-xs truncate" style={{ color: 'rgba(201,143,30,0.5)', fontFamily: 'Inter, sans-serif' }}>Premium Member</p>
           </div>
         </div>
       </div>
@@ -122,7 +134,7 @@ export function Navbar() {
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex bg-background min-h-screen">
+    <div className="flex min-h-screen" style={{ background: '#07080f' }}>
       <Navbar />
       <main className="flex-1 ml-64 p-8 relative">
         <div className="max-w-6xl mx-auto">
